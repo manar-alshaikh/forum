@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link rel="stylesheet" type="text/css" href="/static/registration.css">
+    <style>
+        .profile-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #ddd;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .profile-container:hover {
+            border-color: #007bff;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .add-icon {
+            position: absolute;
+            top: 100px;
+            right: -10px;
+            width: 50px;
+            height: 50px;
+            background-color: #007bff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .default-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: #ccc;
+            z-index: 1;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        /* Show image when it has a source */
+        .profile-image[src] {
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hide default icon when image is shown */
+        .profile-image[src]~.default-icon {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!-- Sign-Up Form -->
+        <div class="form-container sign-up-container">
+            <form action="/register" method="post" enctype="multipart/form-data">
+                <h1>Create Account</h1>
+                <br>
+                <div class="profile-wrapper">
+                    <label for="fileInput" style="display: contents; cursor: pointer;">
+                        <div class="profile-container">
+                            <div class="default-icon">👤</div>
+                            <img id="profileImage" class="profile-image" alt="Profile photo">
+                        </div>
+                        <div class="add-icon">+</div>
+                    </label>
+                    <input type="file" id="fileInput" accept="image/*" onchange="const reader = new FileReader();
+                        reader.onload = function(e) {
+                            document.getElementById('profileImage').src = e.target.result;
+                        };
+                        reader.readAsDataURL(this.files[0]);">
+                </div>
+                <br>
+               
+                <div class="textarea-container">
+                    <input type="text" name="username" placeholder="Username" maxlength="20" value="{{.Username}}"
+                    required />
+                    <div id="counter">0/20</div>
+                </div>
+
+                {{if .UsernameError}}
+                <div class="error-message">{{.UsernameError}}</div>
+                {{end}}
+                <input type="text" name="name" placeholder="Name" value="{{.Name}}" required />
+                {{if .NameError}}
+                <div class="error-message">{{.NameError}}</div>
+                {{end}}
+                <input type="email" name="email" placeholder="Email" value="{{.Email}}" required />
+                {{if .RegistrationEmailError}}
+                <div class="error-message">{{.RegistrationEmailError}}</div>
+                {{end}}
+                <input type="date" name="dob" placeholder="Date Of Birth" value="{{.Dob}}" required />
+                {{if .DobError}}
+                <div class="error-message">{{.DobError}}</div>
+                {{end}}
+                <div class="textarea-container">
+                    <textarea id="hobby" name="hobby" placeholder="Hobby" maxlength="50"
+                        oninput="updateCounter(this)">{{.Hobby}}</textarea>
+                    <div id="counter">0/50</div>
+                </div>
+                <input type="password" name="password" placeholder="Password" required />
+                {{if .RegistrationPasswordError}}
+                <div class="error-message">{{.RegistrationPasswordError}}</div>
+                {{end}}
+                <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+                {{if .ConfirmPasswordError}}
+                <div class="error-message">{{.ConfirmPasswordError}}</div>
+                {{end}}
+                <br>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Sign-In Form -->
+        <div class="form-container sign-in-container">
+            <form action="/login" method="POST">
+                <h1>Sign In</h1>
+                <br>
+                <input type="text" name="loginInput" placeholder="Username or Email" required />
+                {{if .LoginEmailError}}
+                <div class="error-message">{{.LoginEmailError}}</div>
+                {{end}}
+                <input type="password" name="password" placeholder="Password" required />
+                {{if .LoginPasswordError}}
+                <div class="error-message">{{.LoginPasswordError}}</div>
+                {{end}}
+                <br>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+
+        <!-- Overlay for form toggle -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container');
+
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+          // Initialize counters for both fields
+    function initCounters() {
+        // Username counter
+        const usernameInput = document.querySelector('input[name="username"]');
+        const usernameCounter = usernameInput.nextElementSibling;
+        const usernameMaxLength = usernameInput.getAttribute("maxlength");
+        
+        usernameInput.addEventListener('input', function() {
+            const count = this.value.length;
+            usernameCounter.textContent = count + "/" + usernameMaxLength;
+        });
+        
+        // Initialize username counter
+        usernameCounter.textContent = usernameInput.value.length + "/" + usernameMaxLength;
+
+        // Hobby counter
+        const hobbyTextarea = document.getElementById('hobby');
+        const hobbyCounter = hobbyTextarea.nextElementSibling;
+        const hobbyMaxLength = hobbyTextarea.getAttribute("maxlength");
+        
+        hobbyTextarea.addEventListener('input', function() {
+            const count = this.value.length;
+            hobbyCounter.textContent = count + "/" + hobbyMaxLength;
+        });
+        
+        // Initialize hobby counter
+        hobbyCounter.textContent = hobbyTextarea.value.length + "/" + hobbyMaxLength;
+    }
+
+    // Initialize counters when page loads
+    document.addEventListener('DOMContentLoaded', initCounters);
+    </script>
+</body>
+
+</html>

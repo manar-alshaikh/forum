@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./../static/styles.css">
+    <title>Web Forum</title>
+</head>
+<body>
+    <nav>
+        <div>
+            <img src="user_photo.jpg" alt="User Photo" class="user-photo">
+            <a href="index.html">My Page</a>
+            <a href="javascript:void(0);" id="profileBtn">Profile Management</a>
+        </div>
+        <a href="logout.html">Logout</a>
+    </nav>
+    <div class="content">
+        <h1>Welcome to the Web Forum</h1>
+        <section id="posts">
+            <!-- posts -->
+        </section>
+        <button class="create-post-button" id="createPostBtn">+</button>
+    </div>
+
+    <!-- Profile Management Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close profile-close">&times;</span>
+            <h2>Profile Management</h2>
+            <form>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <span class="toggle-eye" onclick="toggleVisibility(this)" title="Toggle Visibility">&#128065;</span>
+                <!-- <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label><br>  -->
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <span class="toggle-eye" onclick="toggleVisibility(this)" title="Toggle Visibility">&#128065;</span>
+                <br>
+                <label for="password">New Password:</label>
+                <input type="password" id="password" name="password" required>
+                <span class="toggle-eye" onclick="toggleVisibility(this)" title="Toggle Visibility">&#128065;</span>
+                <br>
+                <button type="submit">Update Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Post Modal -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close post-close">&times;</span>
+            <h2>Create Post</h2>
+            <form action="/create_post" method="post" enctype="multipart/form-data">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br>
+                
+                <label for="content">Content:</label>
+                <textarea id="content" name="content"></textarea><br>
+
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*"><br><br>
+                
+                <label for="categories">Categories:</label><br>
+                <input type="checkbox" name="categories" value="Sport" id="Sport">
+                <label for="Sport">Sport</label><br>
+                <input type="checkbox" name="categories" value="Entertainment" id="Entertainment">
+                <label for="Entertainment">Entertainment</label><br>
+                <input type="checkbox" name="categories" value="Travel" id="Travel">
+                <label for="Travel">Travel</label><br>
+                <input type="checkbox" name="categories" value="Technology" id="Technology">
+                <label for="Technology">Technology</label><br>
+                
+                <button type="submit">Create Post</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+<div class="filter-container">
+    <h2>Filter posts</h2>
+    <form class="filter-form" action="/filter/posts" method="GET">
+        <select name="filterType" id="filterType">
+            <option value="Categories">Categories</option>
+            <option value="MyPosts">My Posts</option>
+            <option value="LikedPosts">Liked Posts</option>
+        </select>
+        <div id="Categories">
+            <select name="category">
+                <option value="Sport">Sport</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Travel">Travel</option>
+                <option value="Technology">Technology</option>
+            </select>
+        </div>
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+    <script>
+        // Profile Modal
+        var profileModal = document.getElementById("profileModal");
+        var profileBtn = document.getElementById("profileBtn");
+        var profileClose = document.getElementsByClassName("profile-close")[0];
+
+        profileBtn.onclick = function() {
+            profileModal.style.display = "block";
+        }
+        profileClose.onclick = function() {
+            profileModal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == profileModal) {
+                profileModal.style.display = "none";
+            }
+        }
+
+        // Create Post Modal
+        var createPostModal = document.getElementById("createPostModal");
+        var createPostBtn = document.getElementById("createPostBtn");
+        var postClose = document.getElementsByClassName("post-close")[0];
+
+        createPostBtn.onclick = function() {
+            createPostModal.style.display = "block";
+        }
+        postClose.onclick = function() {
+            createPostModal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == createPostModal) {
+                createPostModal.style.display = "none";
+            }
+        }
+        // Toggle visibility
+        function toggleVisibility(toggle) {
+            var hiddenInput = toggle.nextElementSibling;
+            if (hiddenInput.value === "1") {
+                hiddenInput.value = "0";
+                toggle.style.color = "grey";
+            } else {
+                hiddenInput.value = "1";
+                toggle.style.color = "black";
+            }
+        }
+
+         // Filter post
+         document.getElementById('filterType').addEventListener('change', function() {
+            var categorySection = document.getElementById('categorySection');
+            if (this.value === 'categories') {
+                categorySection.style.display = 'block';
+            } else {
+                categorySection.style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>

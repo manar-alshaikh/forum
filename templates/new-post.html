@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Create New Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .form-container input, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+     <!-- Create Post Modal -->
+     <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <span class="close post-close">&times;</span>
+            <h2>Create Post</h2>
+            <form action="/create_post" method="post" enctype="multipart/form-data">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br>
+                
+                <label for="content">Content:</label>
+                <textarea id="content" name="content"></textarea><br>
+
+                <label for="image">Upload Image:</label>
+                <input type="file" id="image" name="image" accept="image/*"><br><br>
+                
+                <label for="categories">Categories:</label><br>
+                <input type="checkbox" name="categories" value="Sport" id="Sport">
+                <label for="Sport">Sport</label><br>
+                <input type="checkbox" name="categories" value="Entertainment" id="Entertainment">
+                <label for="Entertainment">Entertainment</label><br>
+                <input type="checkbox" name="categories" value="Travel" id="Travel">
+                <label for="Travel">Travel</label><br>
+                <input type="checkbox" name="categories" value="Technology" id="Technology">
+                <label for="Technology">Technology</label><br>
+                
+                <button id="CreatePostBtn" class="button">Create New Post</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script>
+         // Create Post Modal
+         var createPostModal = document.getElementById("createPostModal");
+        var createPostBtn = document.getElementById("createPostBtn");
+        var postClose = document.getElementsByClassName("post-close")[0];
+
+        createPostBtn.onclick = function() {
+            createPostModal.style.display = "block";
+        }
+        postClose.onclick = function() {
+            createPostModal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == createPostModal) {
+                createPostModal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

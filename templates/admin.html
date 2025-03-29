@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="./../static/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h2>Admin</h2>
+    </div>
+    <div class="nav">
+        <ul>
+            <li>Users Management</li>
+            <li>Posts Management</li>
+            <li>Complaints Management</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="Users Management">
+            <h2>Users Management</h2>
+            <p>Here you can manage users</p>
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Hobby</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Users}}
+                <tr>
+                    <td>{{.Username}}</td>
+                    <td>{{.Name}}</td>
+                    <td>{{.Email}}</td>
+                    <td>{{.DateOfBirth}}</td>
+                    <td>{{.Blocked_posts}}</td>
+                    <td><button id="BannedButton">Ban</button></td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+
+        <div class="Posts Management">
+            <h2>Posts Management</h2>
+            <p>Here you can manage posts</p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Content</th>
+                    <th>Image</th>
+                    <th>Author</th>
+                    <th>Number of comments</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Posts}}
+                <tr>
+                    <td>{{.Post_id}}</td>
+                    <td>{{.Categories}}</td>
+                    <td>{{.Content}}</td>
+                    <td><img src="{{.Image}}" alt="Post Image"></td>
+                    <td>{{.Username}}</td>
+                    <td>{{.NumberOfComments}}</td>
+                    <td><button id="DeletePost">Delete</button></td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+        
+        <div class="Complaints Management">
+            <h2>Complaints Management</h2>
+            <p>Here you can manage complaints</p>
+            
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>On Post</th>
+                    <th>On Comment</th>
+                    <th>Done By</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Complaints}}
+                <tr>
+                    <td>{{.Complaint_id}}</td>
+                    <td>{{.Post}}</td>
+                    <td>{{.Comment}}</td>
+                    <td>{{.Username}}</td>
+                    <td>
+                        <button id="DeleteComplaints">Delete</button>
+                        <button id="AcceptComplaints">Accept</button>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>On Post</th>
+                    <th>Done By</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .PComplaints}}
+                <tr>
+                    <td>{{.Complaint_id}}</td>
+                    <td>{{.Post}}</td>
+                    <td>{{.Username}}</td>
+                    <td>
+                        <button id="DeletePComplaints">Delete</button>
+                        <button id="AcceptPComplaints">Accept</button>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+    </div>
+</body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="./../static/styles.css">
+</head>
+<body>
+    <div class="header">
+        <h2>Admin</h2>
+    </div>
+    <div class="nav">
+        <ul>
+            <li>Users Management</li>
+            <li>Posts Management</li>
+            <li>Complaints Management</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="Users Management">
+            <h2>Users Management</h2>
+            <p>Here you can manage users</p>
+            <table>
+                <tr>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Date of Birth</th>
+                    <th>Hobby</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Users}}
+                <tr>
+                    <td>{{.Username}}</td>
+                    <td>{{.Name}}</td>
+                    <td>{{.Email}}</td>
+                    <td>{{.DateOfBirth}}</td>
+                    <td>{{.Hobby}}</td>
+                    <td><button id="BannedButton">Ban</button></td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+
+        <div class="Posts Management">
+            <h2>Posts Management</h2>
+            <p>Here you can manage posts</p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Image</th>
+                    <th>Author</th>
+                    <th>Number of comments</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Posts}}
+                <tr>
+                    <td>{{.Post_id}}</td>
+                    <td>{{.Categories}}</td>
+                    <td>{{.Title}}</td>
+                    <td>{{.Content}}</td>
+                    <td><img src="{{.Image}}" alt="Post Image"></td>
+                    <td>{{.Username}}</td>
+                    <td>{{.NumberOfComments}}</td>
+                    <td><button id="DeletePost">Delete</button></td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+
+        <div class="Complaints Management">
+            <h2>Complaints Management</h2>
+            <p>Here you can manage complaints</p>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>On Post</th>
+                    <th>On Comment</th>
+                    <th>Done By</th>
+                    <th>Actions</th>
+                </tr>
+                {{range .Complaints}}
+                <tr>
+                    <td>{{.Complaint_id}}</td>
+                    <td>{{if .comment}}{{.comment.Username}}{{end}}</td>
+                    <td>{{if .post}}{{.post.Username}}{{end}}</td>
+                    <td>{{.Username}}</td>
+                    <td>
+                        <button id="DeleteComplaints">Delete</button>
+                        <button id="AcceptComplaints">Accept</button>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+        </div>
+    </div>
+</body>
+</html> -->

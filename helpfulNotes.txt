@@ -1,0 +1,81 @@
+    // Insert into users table
+    // insertUser := `INSERT INTO users (
+    //     username, name, hide_name, email, hide_email,
+    //     date_of_birth, hide_age, hobby, hide_hobby,
+    //     role, password, blocked_posts, banned
+    // ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+
+    // // Example user data
+    // _, err = db.Exec(insertUser, "john_doe", "John Doe", 0, "john@example.com", 0, 
+    //     "1990-01-01", 0, "Reading", 0, "USER", "password123", 0, 0)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+
+    // _, err = db.Exec(insertUser, "noorz", "Noor Zaher", 0, "noorz@example.com", 0, 
+    //     "1990-01-01", 0, "Reading", 0, "ADMIN", "password123", 0, 0)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+
+    // _, err = db.Exec(insertUser, "haleema", "haleema abbas", 0, "haleema@example.com", 0, 
+    //     "1990-01-01", 0, "Reading", 0, "USER", "password123", 3, 0)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+
+    // insertUser = `INSERT INTO users (
+    //     username, name, email,
+    //     date_of_birth, hobby, 
+    //     role, password
+    // ) VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+    // _, err = db.Exec(insertUser, "Kawther", "Kawther abbas", "Kawther@example.com",
+    //     "1990-01-01", "Reading", "USER", "password123")
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // // Fetch the user
+    // fetchUser := `SELECT username, name, email, date_of_birth, hobby, role FROM users WHERE username = ?`
+    // var username, name, email, dateOfBirth, hobby, role string
+
+    // row := db.QueryRow(fetchUser, "john_doe")
+    // err = row.Scan(&username, &name, &email, &dateOfBirth, &hobby, &role)
+    // if err != nil {
+    //     fmt.Println("User not found!")
+    //     log.Fatal(err)
+    // }
+
+    // fmt.Printf("User Details:\nUsername: %s\nName: %s\nEmail: %s\nDate of Birth: %s\nHobby: %s\nRole: %s\n", 
+    //     username, name, email, dateOfBirth, hobby, role)
+
+    // log.Println("User inserted and fetched successfully!")
+
+    // Fetch all users
+    // fetchAllUsers := `SELECT username, name, email, date_of_birth, hobby, role FROM users`
+    // rows, err := db.Query(fetchAllUsers)
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+    // defer rows.Close()
+
+    // fmt.Println("All Users:")
+    // for rows.Next() {
+    //     var username, name, email, dateOfBirth, hobby, role string
+    //     err = rows.Scan(&username, &name, &email, &dateOfBirth, &hobby, &role)
+    //     if err != nil {
+    //         log.Fatal(err)
+    //     }
+    //     fmt.Printf("Username: %s\nName: %s\nEmail: %s\nDate of Birth: %s\nHobby: %s\nRole: %s\n\n", 
+    //         username, name, email, dateOfBirth, hobby, role)
+    // }
+
+    // err = rows.Err()
+    // if err != nil {
+    //     log.Fatal(err)
+    // }
+
+    // log.Println("Users inserted and fetched successfully!")
+
+---------------------------------------------------------------------------------------------------------------------------
+
